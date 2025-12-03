@@ -4,9 +4,8 @@
   "description": "Aplicativo de conversão de medidas",
   "main": "main.js",
   "scripts": {
-    "start": "electron ."
-    "dist" : "electron-builder"
-    
+    "start": "electron .",
+    "dist": "electron-builder"
   },
   "keywords": [
     "electron",
@@ -15,21 +14,21 @@
   ],
   "author": "Seu Nome",
   "license": "MIT",
-  "dependencies": {
-    "electron": "^39.2.3"
-  }
-"build": {
-  "appId": "com.senac.ti",
-  "productName": "ConversorDeMedidas",
-  "directories": {
-    "output": "dist"
+  "build": {
+    "appId": "com.senac.ti",
+    "productName": "ConversorDeMedidas",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
+    }
   },
-  "win": {
-    "target": "nsis"
-  },
-  "linux": {
-    "target": "AppImage"
+  "devDependencies": {
+    "electron": "^39.2.4",
+    "electron-builder": "^26.0.12"
   }
-}
-
 }
