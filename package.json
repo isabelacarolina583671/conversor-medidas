@@ -5,6 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron ."
+    "dist" : "electron-builder"
+    // Linha a ser adicionada
   },
   "keywords": [
     "electron",
