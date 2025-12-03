@@ -18,4 +18,18 @@
   "dependencies": {
     "electron": "^39.2.3"
   }
+"build": {
+  "appId": "com.senac.ti",
+  "productName": "ConversorDeMedidas",
+  "directories": {
+    "output": "dist"
+  },
+  "win": {
+    "target": "nsis"
+  },
+  "linux": {
+    "target": "AppImage"
+  }
+}
+
 }
