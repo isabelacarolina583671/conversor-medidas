@@ -22,10 +22,14 @@ jobs:
       - name: 3. Instalar Dependências
         run: npm install
 
-      - name: 4. Rodar a Build (Geração dos Instaladores)
+      - name: 4. Definir GH_TOKEN
+        run: echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
+
+
+      - name: 5. Rodar a Build (Geração dos Instaladores)
         run: npm run dist
 
-      - name: 5. Upload dos Artefatos
+      - name: 6. Upload dos Artefatos
         # Salva os arquivos gerados na pasta 'dist/' para que possam ser baixados
         uses: actions/upload-artifact@v4
         with:
