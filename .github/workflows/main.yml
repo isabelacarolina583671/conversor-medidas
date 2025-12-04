@@ -1,14 +1,18 @@
 name: Build and Release
 
-# O workflow será disparado quando uma nova tag (ex: v1.1.0) for enviada ao repositório
+permissions:
+  contents: write
+
 on:
   push:
     tags:
-      - 'v*.*.*' # Dispara em qualquer tag que comece com 'v' seguido de números
+      - 'v*.*.*'
 
 jobs:
   build:
-    runs-on: ubuntu-latest # O ambiente de execução será um servidor Linux (Ubuntu)
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: 1. Checkout do Código
@@ -17,20 +21,15 @@ jobs:
       - name: 2. Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # Use a versão do Node.js compatível com seu projeto
+          node-version: '18'
 
       - name: 3. Instalar Dependências
         run: npm install
 
-      - name: 4. Definir GH_TOKEN
-        run: echo "GH_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
-
-
-      - name: 5. Rodar a Build (Geração dos Instaladores)
+      - name: 4. Rodar a Build (Geração dos Instaladores)
         run: npm run dist
 
-      - name: 6. Upload dos Artefatos
-        # Salva os arquivos gerados na pasta 'dist/' para que possam ser baixados
+      - name: 5. Upload dos Artefatos
         uses: actions/upload-artifact@v4
         with:
           name: build-output
