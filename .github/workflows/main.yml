@@ -3,7 +3,10 @@ name: Build and Release
 on:
   push:
     tags:
-      - 'v*.*.*'
+      - 'v*.*.*' # Dispara quando uma tag como v1.0.0 é enviada
+
+permissions:
+  contents: write # Necessário para criar releases
 
 jobs:
   build:
@@ -21,12 +24,20 @@ jobs:
       - name: 3. Instalar Dependências
         run: npm install
 
-      - name: 4. Rodar a Build (Geração dos Instaladores)
+      # 🔍 Teste se o GH_TOKEN está disponível (sem mostrar o valor)
+      - name: 4. Testar GH_TOKEN
+        run: echo "GH_TOKEN existe? $([[ -n \"${GH_TOKEN}\" ]] && echo true || echo false)"
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      # 🏗️ Build do Electron (gera AppImage, exe, dmg, etc.)
+      - name: 5. Rodar a Build (Geração dos Instaladores)
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run dist
 
-      - name: 5. Upload dos Artefatos
+      # 📦 Upload dos artefatos gerados para consulta no GitHub Actions
+      - name: 6. Upload dos Artefatos
         uses: actions/upload-artifact@v4
         with:
           name: build-output
