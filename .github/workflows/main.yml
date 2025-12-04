@@ -1,8 +1,5 @@
 name: Build and Release
 
-permissions:
-  contents: write
-
 on:
   push:
     tags:
@@ -11,8 +8,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     steps:
       - name: 1. Checkout do Código
@@ -27,6 +22,8 @@ jobs:
         run: npm install
 
       - name: 4. Rodar a Build (Geração dos Instaladores)
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: npm run dist
 
       - name: 5. Upload dos Artefatos
